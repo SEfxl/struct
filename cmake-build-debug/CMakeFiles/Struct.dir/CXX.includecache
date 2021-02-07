@@ -7,6 +7,6 @@
 #IncludeRegexTransform: 
 
 /Users/fuxinliang/CLionProjects/Struct/main.cpp
-iostream
+stdio.h
 -
 
