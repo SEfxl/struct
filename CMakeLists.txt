@@ -3,4 +3,7 @@ project(Struct)
 
 set(CMAKE_CXX_STANDARD 98)
 
-add_executable(Struct main.cpp)
+#add_executable(Struct main.cpp)
+
+#add_executable(Struct LinkList/linklist.cpp )
+add_executable(Struct LinkList/Link.cpp)
