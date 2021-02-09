@@ -6,7 +6,6 @@ typedef struct Lnode {
     struct Lnode *next;
 } Lnode, *LinkList;
 
-
 /**
  * 初始化
  * @param L
@@ -149,14 +148,13 @@ bool deletePositionData(LinkList &L, int position) {
     return true;
 }
 
-
 /**
  * 删除值为data的元素
  * @param L
  * @param data
  * @return
  */
-bool deleteValueData(LinkList &L, int data) {
+void deleteValueData(LinkList &L, int data) {
 
     LinkList p=L->next,pre=L,q;
 
@@ -179,6 +177,53 @@ bool deleteValueData(LinkList &L, int data) {
 
 }
 
+/**
+ * 获取中间节点
+ * @param L
+ */
+void getMiddleNode(LinkList L) {
+
+    LinkList p1,p2;
+    p1 = L;
+    p2 = L;
+    while (p2 != NULL) {
+        if(p2->next != NULL) {
+            p2 = p2->next->next;
+        }else {
+            break;
+        }
+
+        p1 = p1->next;
+
+    }
+
+    printf("快慢指针,中间节点为：%d\n",p1->data);
+
+}
+
+/**
+ * 链表反转
+ * @param L
+ */
+void reverseLinkList(LinkList &L) {
+    LinkList p1,p2,p3,s;
+    p1 = L;
+    p2 = L->next;
+    while(p2 != NULL) {
+        p3 = p2->next;
+        p2->next = p1;
+        p1 = p2;
+        p2 = p3;
+    }
+
+    L->next = NULL;
+
+    //构造一个头节点
+    s =(LinkList) malloc(sizeof(Lnode));
+    s->next =p1;
+    L= s;
+
+}
 
 /**
  * 遍历输出
@@ -192,26 +237,27 @@ void Display(LinkList L) {
         printf("%d ", p->data);
         p = p->next;
     }
-    printf("\n***********************\n");
+    printf("\n\n***********************\n");
 }
 
 
 int main() {
 
 
-    int a[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    int a[] = {1, 2, 3, 4, 5, 6, 7, 8, 9,10};
     int length = sizeof(a) / sizeof(int);
 
     LinkList L; //声明变量
     InitLinkList(L);
 
     //CreateLinkList_Head(L,a,length);
-
     CreateLinkList_Tail(L, a, length);
+    getMiddleNode(L);
     Display(L);
 
     bool res = InsertPosition(L, 3, 8);
     printf("插入结果为：%d\n", res);
+    getMiddleNode(L);
     Display(L);
 
     res = getPositionData(L, 3);
@@ -221,8 +267,10 @@ int main() {
     printf("位置删除结果为：%d\n", res);
     Display(L);
 
-    res = deleteValueData(L,8);
-    printf("值删除结果为：%d\n", res);
+    deleteValueData(L,8);
+    Display(L);
+
+    reverseLinkList(L);
     Display(L);
     return 0;
 
