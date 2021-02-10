@@ -202,6 +202,36 @@ void getMiddleNode(LinkList L) {
 }
 
 /**
+ * 获取倒数第n个节点
+ * @param L
+ * @param n
+ * @return
+ */
+bool getBackCountNode(LinkList L,int n) {
+
+    if(L == NULL || n == 0) {
+        return false;
+    }
+
+    LinkList p=L,q=L;
+    for (int i = 0; i < n; i++) {
+        if(q) {
+            q=q->next;
+        }else {
+            return false;
+        }
+    }
+
+    while (q!=NULL) {
+        p=p->next;
+        q=q->next;
+    }
+    printf("倒数第%d个节点为:%d\n",n,p->data);
+
+    return true;
+}
+
+/**
  * 链表反转
  * @param L
  */
@@ -254,6 +284,8 @@ int main() {
     CreateLinkList_Tail(L, a, length);
     getMiddleNode(L);
     Display(L);
+
+    getBackCountNode(L,3);
 
     bool res = InsertPosition(L, 3, 8);
     printf("插入结果为：%d\n", res);
