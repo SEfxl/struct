@@ -225,6 +225,140 @@ void reverseLinkList(LinkList &L) {
 
 }
 
+
+/**
+ * 链表是否有环
+ * @param L
+ * @return
+ */
+//bool hasCircle(LinkList L) {
+//    LinkList fast,low;
+//    fast = L;
+//    low = L;
+//    while(slow != NULL && fast->next != NULL) { //没有到达链表尾部则继续前进
+//        fast = fast->next->next;
+//        low = low->next;
+//        if(fast == low) { //两指针相遇
+//            return true;
+//        }
+//    }
+//
+//    return false; //到达结尾没有相遇
+//
+//}
+
+
+/**
+ * 链表合并：依次比较p1,p2,将小的值依次插入L中
+ * @param L
+ * @param p1
+ * @param p2
+ */
+void mergeLinkList(LinkList &L,LinkList p1,LinkList p2) {
+    LinkList s,r=L;
+    p1 = p1->next;
+    p2 = p2->next;
+
+    while(p1 != NULL && p2 != NULL) {
+        if(p1->data <= p2->data) {
+            s =(LinkList) malloc(sizeof(Lnode));
+            s->data = p1->data;
+            s->next = NULL;
+
+            r->next = s;
+            r=s;
+
+            p1 = p1->next;
+        } else {
+            s =(LinkList) malloc(sizeof(Lnode));
+            s->data = p2->data;
+            s->next = NULL;
+
+            r->next = s;
+            r=s;
+
+            p2 = p2->next;
+        }
+
+    }
+
+    while (p1 != NULL) {
+        s =(LinkList) malloc(sizeof(Lnode));
+        s->data = p1->data;
+        s->next = NULL;
+
+        r->next = s;
+        r=s;
+
+        p1=p1->next;
+    }
+
+    while (p2 != NULL) {
+        s =(LinkList) malloc(sizeof(Lnode));
+        s->data = p2->data;
+        s->next = NULL;
+
+        r->next = s;
+        r=s;
+
+        p2 = p2->next;
+    }
+
+}
+
+/**
+ * 链表合并：依次比较两个链表的值,用head依次将他们串联起来
+ * @param L1
+ * @param L2
+ * @return
+ */
+LinkList mergeLinkList_2(LinkList &L1, LinkList &L2) {
+
+    LinkList head,tail; //head新链表的头节点,tail新链表的尾节点
+
+    if(L1 == NULL)  {
+        return L2;
+    }else if(L2 == NULL) {
+        return L1;
+    }else {
+        //去除头节点
+        L1 = L1->next;
+        L2 = L2->next;
+
+        if(L1->data <= L2->data) {
+            head = L1;
+            L1 = L1->next;
+        }else {
+            head = L2;
+            L2 = L2->next;
+        }
+
+        tail = head;
+
+        while (L1 && L2) {
+            if(L1->data <= L2->data) {
+                tail->next = L1;
+                tail = L1;
+                L1 = L1->next;
+            }else {
+                tail->next = L2;
+                tail = L2;
+                L2 = L2->next;
+            }
+        }
+
+        if(L1 == NULL) {
+            tail->next = L2;
+        }else if(L2 == NULL){
+            tail->next = L1;
+        }
+
+        return head;
+
+    }
+
+}
+
 /**
  * 遍历输出
  * @param L
@@ -240,6 +374,52 @@ void Display(LinkList L) {
     printf("\n\n***********************\n");
 }
 
+void TestmergeLinkList() {
+
+    LinkList L,L1,L2; //声明变量
+
+    int a[] = {1, 2, 3, 4, 5};
+    int length_1 = sizeof(a) / sizeof(int);
+    InitLinkList(L1);
+    CreateLinkList_Tail(L1, a, length_1);
+    Display(L1);
+
+
+
+    int b[] = {1, 4, 5, 6, 7, 8};
+    int length_2 = sizeof(b) / sizeof(int);
+    InitLinkList(L2);
+    CreateLinkList_Tail(L2, b, length_2);
+    Display(L2);
+
+    InitLinkList(L);
+    mergeLinkList(L,L1,L2);
+    Display(L);
+
+}
+
+int mergeLinkList_2() {
+
+    LinkList L,L1,L2; //声明变量
+
+    int a[] = {1, 2, 3, 4, 5};
+    int length_1 = sizeof(a) / sizeof(int);
+    InitLinkList(L1);
+    CreateLinkList_Tail(L1, a, length_1);
+    Display(L1);
+
+
+
+    int b[] = {1, 4, 5, 6, 7, 8};
+    int length_2 = sizeof(b) / sizeof(int);
+    InitLinkList(L2);
+    CreateLinkList_Tail(L2, b, length_2);
+    Display(L2);
+
+    L = mergeLinkList_2(L1,L2);
+    Display(L);
+
+}
 
 int main() {
 
