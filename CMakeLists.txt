@@ -11,4 +11,6 @@ set(CMAKE_CXX_STANDARD 98)
 #add_executable(Struct stack/seqStack.cpp)
 #add_executable(Struct stack/LinkStack.cpp)
 
-add_executable(Struct queue/SeQueue.cpp)
+#add_executable(Struct queue/SeQueue.cpp)
+
+add_executable(Struct tree/LinkTree.cpp)
