@@ -13,4 +13,6 @@ set(CMAKE_CXX_STANDARD 98)
 
 #add_executable(Struct queue/SeQueue.cpp)
 
-add_executable(Struct tree/LinkTree.cpp)
+#add_executable(Struct tree/LinkTree.cpp)
+
+add_executable(Struct graph/ArrayGraph.cpp)
