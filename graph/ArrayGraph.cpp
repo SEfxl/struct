@@ -4,7 +4,7 @@
 
 #define MaxNum 10  //顶点数的最大值
 
-
+//邻接矩阵
 typedef struct Arc {
     char Vex[MaxNum];  //存储顶点信息
     int Edge[MaxNum][MaxNum];  //边上权值的数据类型
