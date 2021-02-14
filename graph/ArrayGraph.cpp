@@ -196,7 +196,7 @@ void DFS(Gragh G, char ch) {
     
     printf("%c ",ch);
     for (int i = 0; i < G->vexnum; i++) {
-        if(!visited[i]) {
+        if(!visited[i] && G->Edge[index][i]) {
             DFS(G,G->Vex[i]);
         }
     }
