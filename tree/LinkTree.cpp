@@ -103,11 +103,72 @@ void afterOrder(Btree T) {
     }
 }
 
+
+/**
+ * 计算以T的树有多少节点
+ * @param T
+ * @return
+ */
+int treeCount(Btree T) {
+
+    if(T==NULL) {
+        return 0;
+    }
+
+    return 1 + treeCount(T->lchild) + treeCount(T->rchild);
+
+}
+
+/**
+ * 将树以跟节点为竖线,作为镜子进行映射（先序遍历序列）
+ * @param T
+ */
+void treeMirrorPreOrder(Btree &T) {
+
+    if(T == NULL) {
+        return;
+    }
+
+    //交换当前节点的左右子节点
+    Btree temp;
+    temp = T->lchild;
+    T->lchild = T->rchild;
+    T->rchild = temp;
+
+    //让左右子节点继续交换他们的子节点
+    treeMirrorPreOrder(T->lchild);
+    treeMirrorPreOrder(T->rchild);
+}
+
+
+/**
+ * 将树以跟节点为竖线,作为镜子进行映射（后序遍历序列）
+ * @param T
+ */
+void treeMirrorArterOrder(Btree &T) {
+
+    if(T == NULL) {
+        return;
+    }
+
+    treeMirrorArterOrder(T->lchild);
+    treeMirrorArterOrder(T->rchild);
+
+    Btree temp;
+    temp = T->lchild;
+    T->lchild = T->rchild;
+    T->rchild = temp;
+
+}
+
+
+
+
 int main() {
 
     Btree T = NULL;
     //CreateTreeByAsk(T); //第一次先回车
-    CreateTreeByFillSpace(T); //ABD##E##CF#G###
+    CreateTreeByFillSpace(T); //ABD##E##CF#G###  421##3##76##9##
     printf("先序遍历：");
     preOrder(T);
     printf("\n");
@@ -118,6 +179,18 @@ int main() {
 
     printf("后序遍历：");
     afterOrder(T);
+    printf("\n");
+
+    printf("节点数为：%d\n",treeCount(T));
+
+    treeMirrorPreOrder(T);
+    printf("先序遍历反转：");
+    preOrder(T);
+    printf("\n");
+
+    treeMirrorArterOrder(T);
+    printf("后序遍历反转：");
+    preOrder(T);
     printf("\n");
 
     return 0;
