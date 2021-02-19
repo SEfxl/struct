@@ -140,19 +140,18 @@ void treeMirrorPreOrder(Btree &T) {
     treeMirrorPreOrder(T->rchild);
 }
 
-
 /**
  * 将树以跟节点为竖线,作为镜子进行映射（后序遍历序列）
  * @param T
  */
-void treeMirrorArterOrder(Btree &T) {
+void treeMirrorAfterOrder(Btree &T) {
 
     if(T == NULL) {
         return;
     }
 
-    treeMirrorArterOrder(T->lchild);
-    treeMirrorArterOrder(T->rchild);
+    treeMirrorAfterOrder(T->lchild);
+    treeMirrorAfterOrder(T->rchild);
 
     Btree temp;
     temp = T->lchild;
@@ -163,9 +162,100 @@ void treeMirrorArterOrder(Btree &T) {
 
 
 
+/**
+ * 构建最大二叉树
+ * @param nums
+ * @param low
+ * @param high
+ * @return
+ */
+Btree build(int *nums,int low,int high) {
+
+    if(low > high) {
+        return NULL;
+    }
+
+    int index = -1;
+    int maxValue = -100;
+    for (int i = low; i <= high ; i++) {
+        if(maxValue < nums[i]) {
+            index = i;
+            maxValue = nums[i];
+        }
+    }
+
+    Btree root;
+    root = new Bnode;
+    root->data = (char)maxValue;
+
+    root->lchild = build(nums,low,index-1);
+    root->rchild = build(nums,index+1,high);
+
+    return root;
+
+}
+
+/**
+ * 构建最大二叉树
+ *
+ * @param nums
+ * @return
+ */
+Btree constructMaximumBinaryTree(int nums[]) {
+    return build(nums,0,5);
+}
+
+
+
+
+Btree buildTree(int *preOrder,int preStart,int preEnd, int *midOrder, int inStart, int inEnd) {
+
+    if(preStart > preEnd) {
+        return NULL;
+    }
+
+    int rootVal = preOrder[preStart]; //根节点
+
+    int index = -1;  //根节点在后续遍历数组中的下标
+    for (int i = 0; i <= inEnd; i++) {
+        if(rootVal == midOrder[i]) {
+            index = i;
+            break;
+        }
+    }
+
+    int leftSize = index - inStart;
+
+    Btree root;
+    root = new Bnode;
+    root->data = (char)rootVal;
+
+    root->lchild = buildTree(preOrder,preStart+1,preStart+leftSize,midOrder,inStart,index-1);
+
+    root->rchild = buildTree(preOrder,preStart+leftSize+1,preEnd,midOrder,index+1,inEnd);
+
+    return root;
+
+}
+
+/**
+ * 根据前序和中序序列构建二叉树
+ * @param preOrder
+ * @param preLength
+ * @param midOrder
+ * @param midLength
+ * @return
+ */
+Btree constructNewTree(int preOrder[],int preLength,int midOrder[], int midLength) {
+
+    return buildTree(preOrder,0,preLength-1,midOrder,0,midLength-1);
+
+}
+
 
 int main() {
 
+    /*
     Btree T = NULL;
     //CreateTreeByAsk(T); //第一次先回车
     CreateTreeByFillSpace(T); //ABD##E##CF#G###  421##3##76##9##
@@ -188,9 +278,26 @@ int main() {
     preOrder(T);
     printf("\n");
 
-    treeMirrorArterOrder(T);
+    treeMirrorAfterOrder(T);
     printf("后序遍历反转：");
     preOrder(T);
+    printf("\n");
+    */
+
+    //
+//    int arr[] = {3,2,1,6,0,5};
+//    Btree root = constructMaximumBinaryTree(arr);
+//    printf("先序遍历：");
+//    preOrder(root);
+//    printf("\n");
+
+
+
+    int preOrderArr[]= {1,2,5,4,6,7,3,8,9};
+    int midOrderArr[]= {5,2,6,4,7,1,8,3,9};
+    Btree root2 = constructNewTree(preOrderArr,9,midOrderArr,9);
+    printf("先序遍历：");
+    preOrder(root2);
     printf("\n");
 
     return 0;
