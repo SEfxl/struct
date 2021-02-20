@@ -553,7 +553,7 @@ int main() {
 //    printf("递归反转前3-6区间链表节点-> ");
 //    DisplayFromHead(p2);
 
-    /**
+
     getBackCountNode(L, 3);
 
     bool res = InsertPosition(L, 3, 8);
@@ -573,7 +573,7 @@ int main() {
 
     reverseLinkList(L);
     Display(L);
-    **/
+    
 
     return 0;
 
