@@ -17,3 +17,7 @@ add_executable(Struct LinkList/Link.cpp)
 
 #add_executable(Struct graph/ArrayGraph.cpp)
 #add_executable(Struct graph/LinkGraph.cpp)
+
+
+#add_executable(Struct enum/multiplication.cpp)
+
