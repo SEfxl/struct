@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 98)
 #add_executable(Struct main.cpp)
 
 #add_executable(Struct LinkList/linklist.cpp )
-#add_executable(Struct LinkList/Link.cpp)
+add_executable(Struct LinkList/Link.cpp)
 
 #add_executable(Struct stack/seqStack.cpp)
 #add_executable(Struct stack/LinkStack.cpp)
@@ -16,4 +16,4 @@ set(CMAKE_CXX_STANDARD 98)
 #add_executable(Struct tree/LinkTree.cpp)
 
 #add_executable(Struct graph/ArrayGraph.cpp)
-add_executable(Struct graph/LinkGraph.cpp)
+#add_executable(Struct graph/LinkGraph.cpp)
