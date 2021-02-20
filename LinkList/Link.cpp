@@ -6,6 +6,71 @@ typedef struct Lnode {
     struct Lnode *next;
 } Lnode, *LinkList;
 
+LinkList afterSourceNode = NULL;
+
+/**
+ * 递归反转链表
+ * @param head
+ * @return
+ */
+LinkList recursion(LinkList head) {
+
+   if(head == NULL || head->next == NULL) { //节点为空则直接返回 只有一个节点,不需要反转
+       return head;
+   }
+
+   LinkList p = recursion(head->next); //递归遍历至最后一个节点,从后面的节点向前反转
+
+   head->next->next = head; //将当前节点设置为后一个节点的后续节点
+
+   head->next = NULL; //将当前节点的next指针置为NULL, 当递归回溯到第一个节点，尾节点正好也是NULL
+
+   return p; //返回反转后链表的头指针
+
+}
+
+
+/**
+ * 反转链表前n个节点
+ * @param head
+ * @param n
+ * @return
+ */
+LinkList reversePreNode(LinkList head, int n) {
+
+    if(n == 1) {
+        afterSourceNode = head->next; // 记录需要反转节点的在一个节点
+        return head;
+    }
+
+    LinkList p = reversePreNode(head->next, n-1);
+
+    head->next->next = head;
+    head->next = afterSourceNode;
+    return  p;
+
+}
+
+/**
+ * 递归反转链表m-n区间的节点
+ * @param head
+ * @param m
+ * @param n
+ * @return
+ */
+LinkList reverseMtoNNode(LinkList head, int m,int n) {
+
+    if(m== 1) {
+        return reversePreNode(head,n);
+    }
+
+    //前进到反转的起点触发
+    head->next = reverseMtoNNode(head->next,m-1,n-1);
+
+    return head;
+
+}
+
 /**
  * 初始化
  * @param L
@@ -131,15 +196,15 @@ bool getPositionData(LinkList L, int position) {
  * @return
  */
 bool deletePositionData(LinkList &L, int position) {
-    LinkList p=L,q;
+    LinkList p = L, q;
     int j = 1;
     while (p->next && j < position) {
         p = p->next;
         j++;
     }
 
-    if(!p->next || j > position) {
-        return  false;
+    if (!p->next || j > position) {
+        return false;
     }
 
     q = p->next;
@@ -156,18 +221,18 @@ bool deletePositionData(LinkList &L, int position) {
  */
 void deleteValueData(LinkList &L, int data) {
 
-    LinkList p=L->next,pre=L,q;
+    LinkList p = L->next, pre = L, q;
 
-    while (p!= NULL) {
+    while (p != NULL) {
 
-        if(p->data == data) {
+        if (p->data == data) {
 
             q = p;
             pre->next = q->next;
-            p=p->next;
+            p = p->next;
             free(q);
 
-        }else {
+        } else {
             pre = p;
             p = p->next;
         }
@@ -183,13 +248,13 @@ void deleteValueData(LinkList &L, int data) {
  */
 void getMiddleNode(LinkList L) {
 
-    LinkList p1,p2;
+    LinkList p1, p2;
     p1 = L;
     p2 = L;
     while (p2 != NULL) {
-        if(p2->next != NULL) {
+        if (p2->next != NULL) {
             p2 = p2->next->next;
-        }else {
+        } else {
             break;
         }
 
@@ -197,7 +262,7 @@ void getMiddleNode(LinkList L) {
 
     }
 
-    printf("快慢指针,中间节点为：%d\n",p1->data);
+    printf("快慢指针,中间节点为：%d\n", p1->data);
 
 }
 
@@ -207,26 +272,26 @@ void getMiddleNode(LinkList L) {
  * @param n
  * @return
  */
-bool getBackCountNode(LinkList L,int n) {
+bool getBackCountNode(LinkList L, int n) {
 
-    if(L == NULL || n == 0) {
+    if (L == NULL || n == 0) {
         return false;
     }
 
-    LinkList p=L,q=L;
+    LinkList p = L, q = L;
     for (int i = 0; i < n; i++) {
-        if(q) {
-            q=q->next;
-        }else {
+        if (q) {
+            q = q->next;
+        } else {
             return false;
         }
     }
 
-    while (q!=NULL) {
-        p=p->next;
-        q=q->next;
+    while (q != NULL) {
+        p = p->next;
+        q = q->next;
     }
-    printf("倒数第%d个节点为:%d\n",n,p->data);
+    printf("倒数第%d个节点为:%d\n", n, p->data);
 
     return true;
 }
@@ -236,10 +301,10 @@ bool getBackCountNode(LinkList L,int n) {
  * @param L
  */
 void reverseLinkList(LinkList &L) {
-    LinkList p1,p2,p3,s;
+    LinkList p1, p2, p3, s;
     p1 = L;
     p2 = L->next;
-    while(p2 != NULL) {
+    while (p2 != NULL) {
         p3 = p2->next;
         p2->next = p1;
         p1 = p2;
@@ -249,9 +314,9 @@ void reverseLinkList(LinkList &L) {
     L->next = NULL;
 
     //构造一个头节点
-    s =(LinkList) malloc(sizeof(Lnode));
-    s->next =p1;
-    L= s;
+    s = (LinkList) malloc(sizeof(Lnode));
+    s->next = p1;
+    L = s;
 
 }
 
@@ -284,28 +349,28 @@ void reverseLinkList(LinkList &L) {
  * @param p1
  * @param p2
  */
-void mergeLinkList(LinkList &L,LinkList p1,LinkList p2) {
-    LinkList s,r=L;
+void mergeLinkList(LinkList &L, LinkList p1, LinkList p2) {
+    LinkList s, r = L;
     p1 = p1->next;
     p2 = p2->next;
 
-    while(p1 != NULL && p2 != NULL) {
-        if(p1->data <= p2->data) {
-            s =(LinkList) malloc(sizeof(Lnode));
+    while (p1 != NULL && p2 != NULL) {
+        if (p1->data <= p2->data) {
+            s = (LinkList) malloc(sizeof(Lnode));
             s->data = p1->data;
             s->next = NULL;
 
             r->next = s;
-            r=s;
+            r = s;
 
             p1 = p1->next;
         } else {
-            s =(LinkList) malloc(sizeof(Lnode));
+            s = (LinkList) malloc(sizeof(Lnode));
             s->data = p2->data;
             s->next = NULL;
 
             r->next = s;
-            r=s;
+            r = s;
 
             p2 = p2->next;
         }
@@ -313,23 +378,23 @@ void mergeLinkList(LinkList &L,LinkList p1,LinkList p2) {
     }
 
     while (p1 != NULL) {
-        s =(LinkList) malloc(sizeof(Lnode));
+        s = (LinkList) malloc(sizeof(Lnode));
         s->data = p1->data;
         s->next = NULL;
 
         r->next = s;
-        r=s;
+        r = s;
 
-        p1=p1->next;
+        p1 = p1->next;
     }
 
     while (p2 != NULL) {
-        s =(LinkList) malloc(sizeof(Lnode));
+        s = (LinkList) malloc(sizeof(Lnode));
         s->data = p2->data;
         s->next = NULL;
 
         r->next = s;
-        r=s;
+        r = s;
 
         p2 = p2->next;
     }
@@ -344,21 +409,21 @@ void mergeLinkList(LinkList &L,LinkList p1,LinkList p2) {
  */
 LinkList mergeLinkList_2(LinkList &L1, LinkList &L2) {
 
-    LinkList head,tail; //head新链表的头节点,tail新链表的尾节点
+    LinkList head, tail; //head新链表的头节点,tail新链表的尾节点
 
-    if(L1 == NULL)  {
+    if (L1 == NULL) {
         return L2;
-    }else if(L2 == NULL) {
+    } else if (L2 == NULL) {
         return L1;
-    }else {
+    } else {
         //去除头节点
         L1 = L1->next;
         L2 = L2->next;
 
-        if(L1->data <= L2->data) {
+        if (L1->data <= L2->data) {
             head = L1;
             L1 = L1->next;
-        }else {
+        } else {
             head = L2;
             L2 = L2->next;
         }
@@ -366,20 +431,20 @@ LinkList mergeLinkList_2(LinkList &L1, LinkList &L2) {
         tail = head;
 
         while (L1 && L2) {
-            if(L1->data <= L2->data) {
+            if (L1->data <= L2->data) {
                 tail->next = L1;
                 tail = L1;
                 L1 = L1->next;
-            }else {
+            } else {
                 tail->next = L2;
                 tail = L2;
                 L2 = L2->next;
             }
         }
 
-        if(L1 == NULL) {
+        if (L1 == NULL) {
             tail->next = L2;
-        }else if(L2 == NULL){
+        } else if (L2 == NULL) {
             tail->next = L1;
         }
 
@@ -404,16 +469,26 @@ void Display(LinkList L) {
     printf("\n\n***********************\n");
 }
 
+void DisplayFromHead(LinkList L) {
+
+    LinkList p = L;
+    while (p != NULL && p->next != NULL) {
+        printf("%d ",p->data);
+        p=p->next;
+    }
+    printf("\n***********************\n");
+
+}
+
 void TestmergeLinkList() {
 
-    LinkList L,L1,L2; //声明变量
+    LinkList L, L1, L2; //声明变量
 
     int a[] = {1, 2, 3, 4, 5};
     int length_1 = sizeof(a) / sizeof(int);
     InitLinkList(L1);
     CreateLinkList_Tail(L1, a, length_1);
     Display(L1);
-
 
 
     int b[] = {1, 4, 5, 6, 7, 8};
@@ -423,14 +498,14 @@ void TestmergeLinkList() {
     Display(L2);
 
     InitLinkList(L);
-    mergeLinkList(L,L1,L2);
+    mergeLinkList(L, L1, L2);
     Display(L);
 
 }
 
 int mergeLinkList_2() {
 
-    LinkList L,L1,L2; //声明变量
+    LinkList L, L1, L2; //声明变量
 
     int a[] = {1, 2, 3, 4, 5};
     int length_1 = sizeof(a) / sizeof(int);
@@ -439,22 +514,22 @@ int mergeLinkList_2() {
     Display(L1);
 
 
-
     int b[] = {1, 4, 5, 6, 7, 8};
     int length_2 = sizeof(b) / sizeof(int);
     InitLinkList(L2);
     CreateLinkList_Tail(L2, b, length_2);
     Display(L2);
 
-    L = mergeLinkList_2(L1,L2);
+    L = mergeLinkList_2(L1, L2);
     Display(L);
+    return 0;
 
 }
 
 int main() {
 
 
-    int a[] = {1, 2, 3, 4, 5, 6, 7, 8, 9,10};
+    int a[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     int length = sizeof(a) / sizeof(int);
 
     LinkList L; //声明变量
@@ -465,7 +540,21 @@ int main() {
     getMiddleNode(L);
     Display(L);
 
-    getBackCountNode(L,3);
+
+//    LinkList p = recursion(L);
+//    printf("递归反转链表-> ");
+//    DisplayFromHead(p);
+
+//    LinkList p1 = reversePreNode(L->next,3);
+//    printf("递归反转前3个链表节点-> ");
+//    DisplayFromHead(p1);
+
+//    LinkList p2 = reverseMtoNNode(L->next,3,6);
+//    printf("递归反转前3-6区间链表节点-> ");
+//    DisplayFromHead(p2);
+
+    /**
+    getBackCountNode(L, 3);
 
     bool res = InsertPosition(L, 3, 8);
     printf("插入结果为：%d\n", res);
@@ -475,15 +564,17 @@ int main() {
     res = getPositionData(L, 3);
     printf("获取结果为：%d\n\n", res);
 
-    res = deletePositionData(L,4);
+    res = deletePositionData(L, 4);
     printf("位置删除结果为：%d\n", res);
     Display(L);
 
-    deleteValueData(L,8);
+    deleteValueData(L, 8);
     Display(L);
 
     reverseLinkList(L);
     Display(L);
+    **/
+
     return 0;
 
 }
