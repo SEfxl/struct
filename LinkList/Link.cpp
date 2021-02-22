@@ -8,6 +8,63 @@ typedef struct Lnode {
 
 LinkList afterSourceNode = NULL;
 
+
+/**
+ * 迭代输出链表
+ * @param L
+ * @return
+ */
+LinkList reverseLinkIteration(LinkList L) {
+
+    if(L == NULL) {
+        return NULL;
+    }
+
+    LinkList pre,cur,nex;
+    pre = NULL;
+    cur = L;
+    nex = L;
+
+    while (cur != NULL) {
+        nex = cur->next; //当前节点的下一个节点
+        cur->next = pre; //指针指向前面一个节点
+
+        pre = cur; //pre指针节点后移
+        cur = nex; //cur指针节点后移
+    }
+    return pre; //反转后的头节点
+}
+
+
+/**
+ * 将L和B节点之间的数据进行反转
+ * @param L
+ * @param B
+ * @return
+ */
+LinkList reverseLToB(LinkList L, LinkList B) {
+
+    printf("L=%d B= %d\n",L->data,B->data);
+    LinkList pre,cur,nex;
+    pre = NULL;
+    cur = L;
+    nex = L;
+
+
+    while (cur != B) {
+        nex = cur->next;
+        cur->next = pre;
+        pre = cur;
+        cur = nex;
+    }
+
+    L->next = nex; //将反转后节点和没有反转的节点进行链接
+
+    return pre;
+}
+
+
+
 /**
  * 递归反转链表
  * @param head
@@ -471,12 +528,13 @@ void Display(LinkList L) {
 
 void DisplayFromHead(LinkList L) {
 
+    printf("DisplayFromHead：");
     LinkList p = L;
     while (p != NULL && p->next != NULL) {
         printf("%d ",p->data);
         p=p->next;
     }
-    printf("\n***********************\n");
+    printf("\n\n");
 
 }
 
@@ -532,14 +590,23 @@ int main() {
     int a[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     int length = sizeof(a) / sizeof(int);
 
-    LinkList L; //声明变量
-    InitLinkList(L);
+    LinkList L,B; //声明变量
 
+    InitLinkList(L);
     //CreateLinkList_Head(L,a,length);
     CreateLinkList_Tail(L, a, length);
     getMiddleNode(L);
     Display(L);
 
+//    B = L->next->next->next;
+//    printf("cur node = %d\n",B->data);
+//    LinkList LB = reverseLToB(L,L->next->next->next->next->next);
+//    DisplayFromHead(LB);
+
+
+//    LinkList r = reverseLinkIteration(L);
+//    printf("迭代输出链表:");
+//    DisplayFromHead(r);
 
 //    LinkList p = recursion(L);
 //    printf("递归反转链表-> ");
