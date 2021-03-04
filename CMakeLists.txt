@@ -19,11 +19,14 @@ set(CMAKE_CXX_STANDARD 98)
 #add_executable(Struct graph/LinkGraph.cpp)
 
 #add_executable(Struct string/huiwen.cpp)
-add_executable(Struct string/subString.cpp)
+#add_executable(Struct string/subString.cpp)
 
 
 #add_executable(Struct enum/multiplication.cpp)
 #add_executable(Struct enum/quanpailie.cpp)
 
 #add_executable(Struct search/binarySearch.cpp)
+
+add_executable(Struct dynamicPlan/stockQuestion.cpp)
+
 
