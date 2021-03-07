@@ -74,6 +74,46 @@ class Section{
         return $result;
     }
 
+    /**
+     * 获取两个数组的交集
+     * @param array $A
+     * @param array $B
+     *
+     * @return array
+     */
+    function getIntersection(array $A, array $B) {
+
+        $lengthA = count($A);
+        $lengthB = count($B);
+        $i=$j=0;
+        $result = [];
+        while ($i < $lengthA and $j < $lengthB) {
+
+            $a1 = $A[$i][0];
+            $a2 = $A[$i][1];
+
+            $b1 = $B[$j][0];
+            $b2 = $B[$j][1];
+
+            if($b2 >= $a1 && $a2 >= $b1) {
+                $left = max($a1,$b1);
+                $right = min($a2,$b2);
+                $result[] = [$left,$right];
+            }
+
+            if($a2 > $b2) {
+                $j++;
+            }else {
+                $i++;
+            }
+
+        }
+
+        return $result;
+
+    }
+
+
 
 
 }
@@ -88,13 +128,34 @@ $num = $obj->sectionCover($data);
 echo "刨除覆盖区间,剩余区间：".$num."个".PHP_EOL;
 
 $data = [
-  [1,3],
-  [2,6],
-  [8,10],
-  [15,18],
+    [1,3],
+    [2,6],
+    [8,10],
+    [15,18],
 ];
 $result = $obj->sectionMerge($data);
 echo "合并交叉区间后剩余区间：".PHP_EOL;
+foreach ($result as $item) {
+    echo "[".$item[0].",".$item[1]."]".PHP_EOL;
+}
+
+$A = [
+    [0,2],
+    [5,10],
+    [13,23],
+    [24,25]
+];
+
+$B = [
+    [1,5],
+    [8,12],
+    [15,24],
+    [25,26]
+];
+
+$result = $obj->getIntersection($A,$B);
+echo PHP_EOL;
+echo "两个数组交集为：".PHP_EOL;
 foreach ($result as $item) {
     echo "[".$item[0].",".$item[1]."]".PHP_EOL;
 }
