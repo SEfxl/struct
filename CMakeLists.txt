@@ -28,5 +28,8 @@ set(CMAKE_CXX_STANDARD 98)
 #add_executable(Struct search/binarySearch.cpp)
 
 #add_executable(Struct dynamicplan/sellStock.cpp)
+#add_executable(Struct dynamicPlan/stockQuestion.cpp)
+
+add_executable(Struct interval/interval.cpp)
 
 
