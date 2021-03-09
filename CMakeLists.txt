@@ -4,7 +4,6 @@ project(Struct)
 set(CMAKE_CXX_STANDARD 98)
 
 #add_executable(Struct main.cpp)
-
 #add_executable(Struct LinkList/linklist.cpp )
 #add_executable(Struct LinkList/Link.cpp)
 
@@ -29,7 +28,11 @@ set(CMAKE_CXX_STANDARD 98)
 
 #add_executable(Struct dynamicplan/sellStock.cpp)
 #add_executable(Struct dynamicPlan/stockQuestion.cpp)
+#add_executable(Struct dynamicPlan/zeroPackage.cpp)
+#add_executable(Struct dynamicPlan/makeSmallChange.cpp)
+add_executable(Struct dynamicPlan/targetSum.cpp)
 
-add_executable(Struct interval/interval.cpp)
+
+#add_executable(Struct interval/interval.cpp)
 
 
