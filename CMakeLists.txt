@@ -30,6 +30,10 @@ set(CMAKE_CXX_STANDARD 98)
 #add_executable(Struct dynamicplan/sellStock.cpp)
 #add_executable(Struct dynamicPlan/stockQuestion.cpp)
 
-add_executable(Struct interval/interval.cpp)
+#add_executable(Struct interval/interval.cpp)
+
+#add_executable(Struct twoSum/twoSum.cpp)
+
+add_executable(Struct beibao/beibao.cpp)
 
 
