@@ -31,12 +31,15 @@ set(CMAKE_CXX_STANDARD 98)
 #add_executable(Struct dynamicPlan/zeroPackage.cpp)
 #add_executable(Struct dynamicPlan/makeSmallChange.cpp)
 #add_executable(Struct dynamicPlan/targetSum.cpp)
+add_executable(Struct dynamicPlan/LongerCommonSubSequence.cpp)
 
 
 #add_executable(Struct interval/interval.cpp)
 
 #add_executable(Struct twoSum/twoSum.cpp)
 
-add_executable(Struct beibao/beibao.cpp)
+#add_executable(Struct beibao/beibao.cpp)
+
+#add_executable(Struct huisu/targetSum.cpp)
 
 
