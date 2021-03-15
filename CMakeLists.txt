@@ -31,7 +31,9 @@ set(CMAKE_CXX_STANDARD 98)
 #add_executable(Struct dynamicPlan/zeroPackage.cpp)
 #add_executable(Struct dynamicPlan/makeSmallChange.cpp)
 #add_executable(Struct dynamicPlan/targetSum.cpp)
-add_executable(Struct dynamicPlan/LongerCommonSubSequence.cpp)
+#add_executable(Struct dynamicPlan/LongerCommonSubSequence.cpp)
+#add_executable(Struct dynamicPlan/editDistance.cpp)
+add_executable(Struct dynamicPlan/LongerIncrSubSequence.cpp)
 
 
 #add_executable(Struct interval/interval.cpp)

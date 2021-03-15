@@ -5,6 +5,10 @@ int book[10];
 int a[10];
 int nums;
 
+/**
+ * 数的全排列
+ * @param step
+ */
 void dfs(int step) {
 
     if(step == N+1) {
@@ -59,9 +63,9 @@ void dfsNum(int step) {
 
 int main() {
 
-    N = 5;
-    //dfs(1);
+    N = 4;
+    dfs(1);
 
-    dfsNum(1);
+    //dfsNum(1);
     return 0;
 }
